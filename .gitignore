@@ -158,4 +158,7 @@ gradle-app.setting
 *.hprof
 
 # End of https://www.toptal.com/developers/gitignore/api/java,linux,intellij+all,gradle
+
+# 추가적인 제외 사항
+bin
 .env
