@@ -10,7 +10,7 @@
       </v-main>
     </v-layout>
 
-    <v-footer class="footer bg-blue-lighten-4">
+    <v-footer class="footer">
       <Footer />
     </v-footer>
   </v-app>
@@ -35,6 +35,6 @@ export default {
 
 <style>
   .footer {
-    max-height: 100px;
+    max-height: 50px;
   }
 </style>
