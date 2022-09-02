@@ -5,7 +5,7 @@
         <Header />
       </v-app-bar>
 
-      <v-main class="bg-red-lighten-4">
+      <v-main>
         <router-view></router-view>	
       </v-main>
     </v-layout>
