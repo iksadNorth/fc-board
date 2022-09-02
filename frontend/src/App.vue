@@ -1,7 +1,7 @@
 <template>
   <v-app>
     <v-layout>
-      <v-app-bar color="header bg-grey-lighten-2">
+      <v-app-bar color="header bg-black">
         <Header />
       </v-app-bar>
 
