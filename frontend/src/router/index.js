@@ -32,12 +32,6 @@ const routes = [
   },
 
   {
-    path: '/posts/search',
-    name: 'Search',
-    component: () => import('../components/view_Search.vue'), 
-  },
-
-  {
     path: '/posts/search-hashtag',
     name: 'Hashtag',
     component: () => import('../components/view_Hashtag.vue'), 
