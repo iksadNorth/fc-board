@@ -15,7 +15,6 @@ import view_Join from './components/view_Join.vue'
 import view_Login from './components/view_Login.vue'
 import view_Post from './components/view_Post.vue'
 import view_Posts from './components/view_Posts.vue'
-import view_Search from './components/view_Search.vue'
 
 loadFonts()
 
@@ -29,7 +28,6 @@ app.component("view-Join", view_Join)
 app.component("view-Login", view_Login)
 app.component("view-Post", view_Post)
 app.component("view-Posts", view_Posts)
-app.component("view-Search", view_Search)
 
 app.config.globalProperties.$axios = axios;
 app.config.globalProperties.$backendUrl = 'http://localhost:8080';
