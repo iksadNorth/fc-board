@@ -16,27 +16,13 @@
                 v-model="query"
 
                 append-inner-icon="mdi-magnify"
-                @click:append-inner="sendQuery()"
+                @click:append-inner="sendQuery(query)"
                 ></v-text-field>
             </v-col>
         </div>
 
         <div class="bg-grey mb-1">
-            <v-table>
-                <thead><tr>
-                    <th class="text-left" :width=col.width
-                        v-for="col in cols" :key="col"
-                    ><strong>{{ col.name }}</strong></th>
-                </tr></thead>
-                <tbody><tr
-                    v-for="post in posts" :key="post"
-                >
-                    <td><router-link :to="mkPostLink(post.id)">{{ post.title }}</router-link></td>
-                    <td>{{ post.hashtag }}</td>
-                    <td>{{ post.useraccount }}</td>
-                    <td>{{ post.created_at }}</td>
-                </tr></tbody>
-            </v-table>
+            <com-List-posts :posts="posts" />
         </div>
 
         <div class="mb-1 d-flex justify-end">
@@ -48,11 +34,7 @@
         </div>
 
         <div class="mb-1">
-            <v-pagination
-            v-model="page"
-            :length="pages" :total-visible="total_visible"
-            rounded="10"
-            ></v-pagination>
+            <com-pagination :pages="10" :total_visible="8" @page="changePage" />
         </div>
     </v-container>
 </template>
@@ -61,20 +43,9 @@
 export default {
     data() {
         return {
-            page: 1,
-            pages: 10,
-            total_visible: 8,
-
             keys: ['제목', '본문', '작성자'],
             key: '제목',
             query: '',
-
-            cols: [
-                {name: '제목', width: '55%'}, 
-                {name: '해시태그', width: '15%'}, 
-                {name: '작성자', width: '15%'}, 
-                {name: '작성일', width: '15%'}, 
-            ],
 
             posts: [
                 {title: '첫 게시물 제목', hashtag: '#red', useraccount: 'iksad', created_at: '2022-01-01', id: 0,},
@@ -84,27 +55,51 @@ export default {
     },
 
     methods: {
-        sendQuery() {
-            // 쿼리를 보낼 함수.
+        sendQuery(query) {
+            // TODO: 해당 쿼리에 대한 게시글 조회 api 호출.
+            // const params = JSON.stringify({
+            //     size: this.comments_in_a_page,
+            //     page: query,
+            //     sortBy: 'createdAt-desc',
+            // });
+            query
+            this.$axios
+            // .get('/api/posts' + this.id(), params)
+            .get('/api/posts' + this.id())
+            .then(res => {
+                console.log(res.data);
+                console.log("게시글 조회[registerComment()]");
+                this.posts = res.data.posts
+            })
+            .catch(err => {
+                console.log(err);
+                console.log("게시글 조회 실패! [registerComment()]");
+            });
         },
 
         registPost() {
-            // 글 등록 함수.
+            // TODO: 게시글 등록 api 호출.
         },
 
         changePage(newVal) {
-            console.log(newVal);
-            // 페이지가 바뀔 때, 작동하는 함수.
-        },
+            // TODO: 해당 페이지 게시글 조회 api 호출.
+            const params = JSON.stringify({
+                size: this.comments_in_a_page,
+                page: newVal,
+                sortBy: 'createdAt-desc',
+            });
 
-        mkPostLink(id) {
-            return '/posts/' + id
-        }
-    },
-
-    watch: {
-        'page': function (newVal) {
-            this.changePage(newVal);
+            this.$axios
+            .get('/api/posts', params)
+            .then(res => {
+                console.log(res.data);
+                console.log("게시글 조회[registerComment()]");
+                this.posts = res.data.posts
+            })
+            .catch(err => {
+                console.log(err);
+                console.log("게시글 조회 실패! [registerComment()]");
+            });
         },
     },
 
