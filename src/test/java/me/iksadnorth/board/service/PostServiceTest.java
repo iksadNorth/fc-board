@@ -15,10 +15,11 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 
+import java.util.Optional;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.BDDMockito.given;
-import static org.mockito.BDDMockito.then;
+import static org.mockito.BDDMockito.*;
 
 @DisplayName("비지니스 로직 - 게시판")
 @ExtendWith(MockitoExtension.class)
@@ -29,10 +30,14 @@ class PostServiceTest {
     @Mock
     private PostRepository postRepository;
 
+    @Mock
+    private Post post;
+
     @DisplayName("게시글을 제목으로 검색하면, 게시글 리스트를 반환한다. - issue#18 1-1-1 참고")
     @Test
     void givenSearchWithTITLE_whenSearchingPosts_thenReturnsPostList() {
         // Given
+        given(postRepository.findByTitleContaining(any(), any())).willReturn(Page.empty());
 
         // When
         Page<PostDto> posts = postService.searchPosts(SearchType.TITLE, "keyword", Pageable.unpaged());
@@ -45,6 +50,7 @@ class PostServiceTest {
     @Test
     void givenSearchWithCONTENT_whenSearchingPosts_thenReturnsPostList() {
         // Given
+        given(postRepository.findByContentContaining(any(), any())).willReturn(Page.empty());
 
         // When
         Page<PostDto> posts = postService.searchPosts(SearchType.CONTENT, "keyword", Pageable.unpaged());
@@ -57,6 +63,7 @@ class PostServiceTest {
     @Test
     void givenSearchWithID_whenSearchingPosts_thenReturnsPostList() {
         // Given
+        given(postRepository.findByIdContaining(any(), any())).willReturn(Page.empty());
 
         // When
         Page<PostDto> posts = postService.searchPosts(SearchType.ID, "keyword", Pageable.unpaged());
@@ -69,6 +76,7 @@ class PostServiceTest {
     @Test
     void givenSearchWithNICKNAME_whenSearchingPosts_thenReturnsPostList() {
         // Given
+        given(postRepository.findByNicknameContaining(any(), any())).willReturn(Page.empty());
 
         // When
         Page<PostDto> posts = postService.searchPosts(SearchType.NICKNAME, "keyword", Pageable.unpaged());
@@ -81,6 +89,7 @@ class PostServiceTest {
     @Test
     void givenSearchWithHASHTAG_whenSearchingPosts_thenReturnsPostList() {
         // Given
+        given(postRepository.findByHashtagContaining(any(), any())).willReturn(Page.empty());
 
         // When
         Page<PostDto> posts = postService.searchPosts(SearchType.HASHTAG, "keyword", Pageable.unpaged());
@@ -93,6 +102,7 @@ class PostServiceTest {
     @Test
     void givenNumOfPage_whenLoadPage_thenShowPageExpected() {
         // Given
+        given(postRepository.findByTitleContaining(any(), any())).willReturn(Page.empty());
         Pageable page = PageRequest.of(1, 5, Sort.by("created_at").descending());
 
         // When
@@ -125,11 +135,12 @@ class PostServiceTest {
     @Test
     void givenPostInfo_whenUpdatingPost_thenUpdatesPost() {
         // Given
-        given(postRepository.save(any(Post.class))).willReturn(null);
+        given(postRepository.save(any(Post.class))).willReturn(new Post());
+        given(postRepository.getReferenceById(any(Long.class))).willReturn(new Post());
 
         // When
         postService.updatePost(
-                PostDto.of(1L, "첫 게시물", "첫 게시글 내용", "설렘")
+                1L, PostDto.of("첫 게시물", "첫 게시글 내용", "설렘")
         );
 
         // Then
@@ -148,4 +159,16 @@ class PostServiceTest {
         then(postRepository).should().deleteById(any(Long.class));
     }
 
+    @DisplayName("게시글 조회 테스트. - issue#18 1-1-2 참고")
+    @Test
+    void givenId_whenLoadingPost_thenLoadsPost() {
+        // Given
+        given(postRepository.findById(any(Long.class))).willReturn(Optional.of(new Post()));
+
+        // When
+        PostDto postDto = postService.loadPost(1L);
+
+        // Then
+        assertThat(postDto).isNotNull();
+    }
 }
