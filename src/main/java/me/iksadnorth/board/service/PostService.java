@@ -1,6 +1,7 @@
 package me.iksadnorth.board.service;
 
 import lombok.RequiredArgsConstructor;
+import me.iksadnorth.board.domain.Post;
 import me.iksadnorth.board.dto.PostDto;
 import me.iksadnorth.board.repository.PostRepository;
 import me.iksadnorth.board.type.SearchType;
@@ -18,16 +19,39 @@ public class PostService {
 
     @Transactional(readOnly = true)
     public Page<PostDto> searchPosts(SearchType searchType, String keyword, Pageable pageable) {
-        return null;
+        if (keyword == null || keyword.isBlank()) {
+            postRepository.findAll(pageable).map(PostDto::from);
+        }
+
+        return switch (searchType) {
+            case TITLE -> postRepository.findByTitleContaining(keyword, pageable).map(PostDto::from);
+            case ID -> postRepository.findByIdContaining(keyword, pageable).map(PostDto::from);
+            case CONTENT -> postRepository.findByContentContaining(keyword, pageable).map(PostDto::from);
+            case NICKNAME -> postRepository.findByNicknameContaining(keyword, pageable).map(PostDto::from);
+            case HASHTAG -> postRepository.findByHashtagContaining(keyword, pageable).map(PostDto::from);
+        };
     }
 
     public void savePost(PostDto postDto) {
-//        postRepository.save(postDto);
+        postRepository.save(PostDto.toEntity(postDto));
     }
 
-    public void updatePost(PostDto postUpdateDto) {
+    public void updatePost(Long id, PostDto postDto) {
+        Post post = postRepository.getReferenceById(id);
+
+        if (postDto.getTitle() != null) {post.setTitle(postDto.getTitle());}
+        if (postDto.getContent() != null) {post.setContent(postDto.getContent());}
+        post.setHashtag(postDto.getHashtag());
+
+        postRepository.save(post);
     }
 
     public void deletePost(long id) {
+        postRepository.deleteById(id);
+    }
+
+    @Transactional(readOnly = true)
+    public PostDto loadPost(Long id) {
+        return PostDto.from(postRepository.findById(id).get());
     }
 }
