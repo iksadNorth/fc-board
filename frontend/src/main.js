@@ -16,7 +16,7 @@ import view_Home from './components/view_Home.vue'
 import view_Join from './components/view_Join.vue'
 import view_Login from './components/view_Login.vue'
 import view_Post from './components/view_Post.vue'
-import view_Posts from './components/view_Posts.vue'
+import view_PostWrite from './components/view_PostWrite.vue'
 
 loadFonts()
 
@@ -31,7 +31,7 @@ app.component("view-Home", view_Home)
 app.component("view-Join", view_Join)
 app.component("view-Login", view_Login)
 app.component("view-Post", view_Post)
-app.component("view-Posts", view_Posts)
+app.component("view-PostWrite", view_PostWrite)
 
 axios.defaults.baseURL = 'http://localhost:8080'
 app.config.globalProperties.$axios = axios;

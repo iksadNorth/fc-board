@@ -79,6 +79,7 @@ export default {
 
         registPost() {
             // TODO: 게시글 등록 api 호출.
+            this.$router.push("/post-write");
         },
 
         changePage(newVal) {
