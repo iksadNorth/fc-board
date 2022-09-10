@@ -162,3 +162,4 @@ gradle-app.setting
 # 추가적인 제외 사항
 bin
 .env
+/src/main/resources/data1.sqld
