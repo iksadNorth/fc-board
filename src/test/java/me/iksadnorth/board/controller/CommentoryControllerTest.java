@@ -1,26 +1,24 @@
 package me.iksadnorth.board.controller;
 
-import me.iksadnorth.board.domain.Commentory;
-import me.iksadnorth.board.repository.CommentoryRepository;
 import me.iksadnorth.board.service.CommentoryService;
-import me.iksadnorth.board.service.PostService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import java.util.HashMap;
+import java.util.Map;
+
+import static me.iksadnorth.board.utils.HttpBody.make;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@DisplayName("api test - api/comments/~")
+@DisplayName("api test - api/posts/{postId}/comments/~")
 @WebMvcTest(CommentoryController.class)
 class CommentoryControllerTest {
 
@@ -34,12 +32,14 @@ class CommentoryControllerTest {
     @Test
     public void giveCommentInfo_whenSavingComment_thenSavesComment() throws Exception {
         // give
+        Map<String, String> params = new HashMap<>();
+        params.put("content", "첫 댓글 내용");
 
         // when & then
-        mvc.perform(post("/api/comments/")
-                .param("content", "첫 댓글 내용"))
-                .andExpect(status().isOk())
-                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON));
+        mvc.perform(post("/api/posts/1/comments/")
+                        .content(make(params))
+                        .contentType(MediaType.APPLICATION_JSON))
+                        .andExpect(status().isOk());
 
     }
 
@@ -47,12 +47,14 @@ class CommentoryControllerTest {
     @Test
     public void giveCommentInfo_whenUpdatingComment_thenUpdatesComment() throws Exception {
         // give
+        Map<String, String> params = new HashMap<>();
+        params.put("content", "첫 댓글 내용 수정");
 
         // when & then
-        mvc.perform(put("/api/comments/1")
-                        .param("content", "첫 댓글 내용 수정"))
-                .andExpect(status().isOk())
-                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON));
+        mvc.perform(put("/api/posts/1/comments/1")
+                        .content(make(params))
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
 
     }
 
@@ -62,9 +64,8 @@ class CommentoryControllerTest {
         // give
 
         // when & then
-        mvc.perform(put("/api/comments/1"))
-                .andExpect(status().isOk())
-                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON));
+        mvc.perform(delete("/api/posts/1/comments/1"))
+                .andExpect(status().isOk());
 
     }
 
@@ -72,14 +73,15 @@ class CommentoryControllerTest {
     @Test
     public void giveCommentParams_whenLoadingComment_thenLoadsComment() throws Exception {
         // give
+        MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
+        params.add("page", "1");
+        params.add("size", "5");
+        params.add("sort", "created_at,decs");
 
         // when & then
-        mvc.perform(put("/api/comments/")
-                        .param("page", "1")
-                        .param("size", "5")
-                        .param("sort", "created_at,decs"))
-                .andExpect(status().isOk())
-                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON));
+        mvc.perform(get("/api/posts/1/comments/")
+                        .params(params))
+                .andExpect(status().isOk());
 
     }
 
