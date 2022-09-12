@@ -22,11 +22,11 @@ public abstract class BaseEntity {
 
     @CreatedBy
     @Column(updatable = true)
-    private LocalDateTime createdBy;   // 생성자
+    private String createdBy;   // 생성자
 
     @LastModifiedDate
     private LocalDateTime modifiedAt;  // 변경일
 
     @LastModifiedBy
-    private LocalDateTime modifiedBy;  // 변경자
+    private String modifiedBy;  // 변경자
 }
