@@ -1,16 +1,16 @@
 <template>
   <v-app>
     <v-layout>
-      <v-app-bar color="header bg-grey-lighten-2">
+      <v-app-bar color="header bg-black">
         <Header />
       </v-app-bar>
 
-      <v-main class="bg-red-lighten-4">
+      <v-main>
         <router-view></router-view>	
       </v-main>
     </v-layout>
 
-    <v-footer class="footer bg-blue-lighten-4">
+    <v-footer class="footer">
       <Footer />
     </v-footer>
   </v-app>
@@ -35,6 +35,6 @@ export default {
 
 <style>
   .footer {
-    max-height: 100px;
+    max-height: 50px;
   }
 </style>

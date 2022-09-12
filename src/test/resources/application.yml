@@ -1,0 +1,26 @@
+# debug 모드를 활성화시켜서 더 자세한 로그를 볼 수 있음.
+debug: false
+# Actuator에 관한 구문.TODO: 나중에 좀더 찾아보기
+management.endpoints.web.exposure.include: "*"
+
+logging:
+  level:
+    me.iksadnorth.board: trace
+    org.springframework.web.servlet: debug
+    # sql query의 ?에 대입된 인자들을 알려줌.
+    org.hibernate.type.descriptor.sql.BasicBinder: trace
+
+spring:
+  datasource:
+    url: jdbc:h2:mem:test_mem
+    username: iksad
+    password: 1234 # TODO: 보안을 위해 숨겨야 함.
+  jpa:
+    defer-datasource-initialization: true
+    hibernate.ddl-auto: create
+    show-sql: true
+    properties:
+      hibernate.format_sql: true
+      hibernate.default_batch_fetch_size: 100
+  h2.console.enabled: true
+  sql.init.mode: always

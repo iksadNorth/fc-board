@@ -20,21 +20,15 @@ const routes = [
   },
 
   {
-    path: '/posts',
-    name: 'Posts',
-    component: () => import('../components/view_Posts.vue'), 
+    path: '/post-write',
+    name: 'PostWrite',
+    component: () => import('../components/view_PostWrite.vue'), 
   },
 
   {
-    path: '/posts/:posts-id',
+    path: '/posts/:id',
     name: 'Post',
     component: () => import('../components/view_Post.vue'), 
-  },
-
-  {
-    path: '/posts/search',
-    name: 'Search',
-    component: () => import('../components/view_Search.vue'), 
   },
 
   {
