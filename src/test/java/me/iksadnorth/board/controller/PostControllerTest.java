@@ -12,11 +12,16 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+import static me.iksadnorth.board.utils.HttpBody.make;
 
 @DisplayName("api test - api/posts/~")
 @WebMvcTest(PostController.class)
@@ -71,11 +76,15 @@ class PostControllerTest {
     @Test
     public void givenPostInfo_whenSavingPost_thenSavesPost() throws Exception {
         // given
+        Map<String, String> params = new HashMap<>();
+        params.put("title", "첫 게시물");
+        params.put("content", "첫 게시물입니다.");
+        params.put("hashtag", "기대");
 
         // when & then
         mvc.perform(post("/api/posts/")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content("{\"title\":\"첫 게시물\", \"content\":\"첫 게시물입니다.\",\"hashtag\":\"기대\"}"))
+                        .content(make(params)))
                         .andExpect(status().isOk());
     }
 
@@ -83,11 +92,15 @@ class PostControllerTest {
     @Test
     public void givenPostInfo_whenUpdatingPost_thenUpdatesPost() throws Exception {
         // given
+        Map<String, String> params = new HashMap<>();
+        params.put("title", "첫 게시물 수정");
+        params.put("content", "첫 게시물 수정입니다.");
+        params.put("hashtag", "기대 수정");
 
         // when & then
         mvc.perform(put("/api/posts/1")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content("{\"title\":\"첫 게시물 수정\", \"content\":\"첫 게시물 수정입니다.\",\"hashtag\":\"기대 수정\"}"))
+                        .content(make(params)))
                 .andExpect(status().isOk());
     }
 
