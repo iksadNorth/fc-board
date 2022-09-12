@@ -63,23 +63,10 @@ class PostServiceTest {
     @Test
     void givenSearchWithID_whenSearchingPosts_thenReturnsPostList() {
         // Given
-        given(postRepository.findByIdContaining(any(), any())).willReturn(Page.empty());
+        given(postRepository.findByUseraccount_UsernameContaining(any(), any())).willReturn(Page.empty());
 
         // When
-        Page<PostDto> posts = postService.searchPosts(SearchType.ID, "keyword", Pageable.unpaged());
-
-        // Then
-        assertThat(posts).isNotNull();
-    }
-
-    @DisplayName("게시글을 nickname으로 검색하면, 게시글 리스트를 반환한다. - issue#18 1-1-1 참고")
-    @Test
-    void givenSearchWithNICKNAME_whenSearchingPosts_thenReturnsPostList() {
-        // Given
-        given(postRepository.findByNicknameContaining(any(), any())).willReturn(Page.empty());
-
-        // When
-        Page<PostDto> posts = postService.searchPosts(SearchType.NICKNAME, "keyword", Pageable.unpaged());
+        Page<PostDto> posts = postService.searchPosts(SearchType.USERNAME, "keyword", Pageable.unpaged());
 
         // Then
         assertThat(posts).isNotNull();

@@ -25,9 +25,8 @@ public class PostService {
 
         return switch (searchType) {
             case TITLE -> postRepository.findByTitleContaining(keyword, pageable).map(PostDto::from);
-            case ID -> postRepository.findByIdContaining(keyword, pageable).map(PostDto::from);
+            case USERNAME -> postRepository.findByUseraccount_UsernameContaining(keyword, pageable).map(PostDto::from);
             case CONTENT -> postRepository.findByContentContaining(keyword, pageable).map(PostDto::from);
-            case NICKNAME -> postRepository.findByNicknameContaining(keyword, pageable).map(PostDto::from);
             case HASHTAG -> postRepository.findByHashtagContaining(keyword, pageable).map(PostDto::from);
         };
     }
