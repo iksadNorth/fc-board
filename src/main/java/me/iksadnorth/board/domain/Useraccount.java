@@ -3,8 +3,10 @@ package me.iksadnorth.board.domain;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Getter
 @ToString
@@ -12,10 +14,9 @@ import javax.persistence.*;
         @Index(columnList = "username"),
         @Index(columnList = "email"),
 })
+@EntityListeners(AuditingEntityListener.class)
 @Entity
-public class Useraccount {
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class Useraccount  extends AtomEntity {
 
     @Setter @Column(nullable = false)
     private String username;    // 유저명
