@@ -29,4 +29,23 @@ public class Useraccount  extends AtomEntity {
 
     @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "useraccount")
     private Set<Role> roles;
+
+    public Useraccount() {
+    }
+
+    public Useraccount(String username, String pw, String email, Set<Role> roles) {
+        this.username = username;
+        this.pw = pw;
+        this.email = email;
+        this.roles = roles;
+    }
+
+    public static Useraccount of(String username, String pw, String email) {
+        return new Useraccount(
+                username,
+                pw,
+                email,
+                null
+        );
+    }
 }
