@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
@@ -15,10 +16,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static me.iksadnorth.board.utils.HttpBody.make;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @DisplayName("api test - api/posts/{postId}/comments/~")
+@WithMockUser
 @WebMvcTest(CommentoryController.class)
 class CommentoryControllerTest {
 
@@ -37,6 +40,7 @@ class CommentoryControllerTest {
 
         // when & then
         mvc.perform(post("/api/posts/1/comments/")
+                        .with(csrf())
                         .content(make(params))
                         .contentType(MediaType.APPLICATION_JSON))
                         .andExpect(status().isOk());
@@ -52,6 +56,7 @@ class CommentoryControllerTest {
 
         // when & then
         mvc.perform(put("/api/posts/1/comments/1")
+                        .with(csrf())
                         .content(make(params))
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
@@ -64,7 +69,8 @@ class CommentoryControllerTest {
         // give
 
         // when & then
-        mvc.perform(delete("/api/posts/1/comments/1"))
+        mvc.perform(delete("/api/posts/1/comments/1")
+                        .with(csrf()))
                 .andExpect(status().isOk());
 
     }

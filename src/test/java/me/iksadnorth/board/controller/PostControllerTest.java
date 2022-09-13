@@ -10,20 +10,22 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.HashMap;
 import java.util.Map;
 
+import static me.iksadnorth.board.utils.HttpBody.make;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import static me.iksadnorth.board.utils.HttpBody.make;
-
 @DisplayName("api test - api/posts/~")
+@WithMockUser
 @WebMvcTest(PostController.class)
 class PostControllerTest {
 
@@ -33,7 +35,7 @@ class PostControllerTest {
     @MockBean
     private PostService postService;
 
-    private PostDto postDto = PostDto.of("test title", "test content", "test hashtag");
+    private final PostDto postDto = PostDto.of("test title", "test content", "test hashtag");
 
     @DisplayName("/api/posts/ - 게시글 리스트 조회")
     @Test
@@ -83,6 +85,7 @@ class PostControllerTest {
 
         // when & then
         mvc.perform(post("/api/posts/")
+                        .with(csrf())
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(make(params)))
                         .andExpect(status().isOk());
@@ -99,6 +102,7 @@ class PostControllerTest {
 
         // when & then
         mvc.perform(put("/api/posts/1")
+                        .with(csrf())
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(make(params)))
                 .andExpect(status().isOk());
@@ -110,7 +114,8 @@ class PostControllerTest {
         // given
 
         // when & then
-        mvc.perform(delete("/api/posts/1"))
+        mvc.perform(delete("/api/posts/1")
+                        .with(csrf()))
                 .andExpect(status().isOk());
     }
 }
