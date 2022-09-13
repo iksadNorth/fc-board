@@ -6,7 +6,6 @@ import lombok.ToString;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
-import java.util.Objects;
 
 @Getter
 @ToString
@@ -17,9 +16,6 @@ import java.util.Objects;
 @EntityListeners(AuditingEntityListener.class)
 @Entity
 public class Commentory extends BaseEntity{
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     private Useraccount useraccount;              // 글쓴이
 
@@ -36,18 +32,5 @@ public class Commentory extends BaseEntity{
         this.useraccount = useraccount;
         this.post = post;
         this.content = content;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Commentory commentory = (Commentory) o;
-        return id.equals(commentory.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id);
     }
 }

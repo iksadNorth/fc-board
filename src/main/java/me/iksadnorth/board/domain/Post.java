@@ -6,7 +6,6 @@ import lombok.ToString;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
-import java.util.Objects;
 
 @Getter
 @ToString
@@ -19,9 +18,6 @@ import java.util.Objects;
 @EntityListeners(AuditingEntityListener.class)
 @Entity
 public class Post extends BaseEntity{
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     private Useraccount useraccount;              // 글쓴이
 
@@ -46,18 +42,5 @@ public class Post extends BaseEntity{
 
     public Post of(Useraccount useraccount, String title, String content, String hashtag) {
         return new Post(useraccount, title, content, hashtag);
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Post post = (Post) o;
-        return id.equals(post.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id);
     }
 }
