@@ -22,5 +22,11 @@ public class Useraccount  extends AtomEntity {
     private String username;    // 유저명
 
     @Setter @Column(nullable = false)
+    private String pw;    // 비밀번호
+
+    @Setter @Column(nullable = false)
     private String email;       // 이메일
+
+    @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "useraccount")
+    private Set<Role> roles;
 }
