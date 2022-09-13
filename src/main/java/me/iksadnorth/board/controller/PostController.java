@@ -19,9 +19,9 @@ public class PostController {
 
     @GetMapping("/")
     public Page<PostDto> searchPosts(
-            @RequestParam(required = false) SearchType searchType,
-            @RequestParam(required = false) String keyword,
-            @PageableDefault(page = 1, size = 10, sort = {"creat_at"}, direction = Sort.Direction.DESC) Pageable page
+            @RequestParam(required = false, defaultValue = "TITLE") SearchType searchType,
+            @RequestParam(required = false, defaultValue = "") String keyword,
+            @PageableDefault(page = 0, size = 10, sort = {"createdAt"}, direction = Sort.Direction.DESC) Pageable page
             ) {
         return postService.searchPosts(searchType, keyword, page);
     }
