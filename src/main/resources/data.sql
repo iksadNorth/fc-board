@@ -1,13 +1,13 @@
-insert into useraccount (username, email) values ('fingerfield0', 'vstandage0@ucoz.ru');
-insert into useraccount (username, email) values ('kstonelake1', 'mrodrigo1@microsoft.com');
-insert into useraccount (username, email) values ('mrooke2', 'oworthington2@trellian.com');
-insert into useraccount (username, email) values ('lmcallan3', 'kraye3@booking.com');
-insert into useraccount (username, email) values ('tblazewicz4', 'bdemchen4@creativecommons.org');
-insert into useraccount (username, email) values ('lshieldon5', 'ldeglanville5@cdc.gov');
-insert into useraccount (username, email) values ('vwooller6', 'cfinley6@umn.edu');
-insert into useraccount (username, email) values ('cruppert7', 'mverbrugghen7@omniture.com');
-insert into useraccount (username, email) values ('ahensmans8', 'tvalentin8@gizmodo.com');
-insert into useraccount (username, email) values ('tneild9', 'dvaz9@nbcnews.com');
+insert into useraccount (username, pw, email) values ('fingerfield0', 'q1w2e3r4!@#', 'vstandage0@ucoz.ru');
+insert into useraccount (username, pw, email) values ('kstonelake1', 'q1w2e3r4!@#', 'mrodrigo1@microsoft.com');
+insert into useraccount (username, pw, email) values ('mrooke2', 'q1w2e3r4!@#', 'oworthington2@trellian.com');
+insert into useraccount (username, pw, email) values ('lmcallan3', 'q1w2e3r4!@#', 'kraye3@booking.com');
+insert into useraccount (username, pw, email) values ('tblazewicz4', 'q1w2e3r4!@#', 'bdemchen4@creativecommons.org');
+insert into useraccount (username, pw, email) values ('lshieldon5', 'q1w2e3r4!@#', 'ldeglanville5@cdc.gov');
+insert into useraccount (username, pw, email) values ('vwooller6', 'q1w2e3r4!@#', 'cfinley6@umn.edu');
+insert into useraccount (username, pw, email) values ('cruppert7', 'q1w2e3r4!@#', 'mverbrugghen7@omniture.com');
+insert into useraccount (username, pw, email) values ('ahensmans8', 'q1w2e3r4!@#', 'tvalentin8@gizmodo.com');
+insert into useraccount (username, pw, email) values ('tneild9', 'q1w2e3r4!@#', 'dvaz9@nbcnews.com');
 
 insert into post (useraccount_id, title, content, hashtag) values (1, 'New York, I Love You', 'Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Mauris viverra diam vitae quam. Suspendisse potenti. Nullam porttitor lacus at turpis.', 'Drama|Romance');
 insert into post (useraccount_id, title, content, hashtag) values (2, 'Diamonds', 'Integer non velit. Donec diam neque, vestibulum eget, vulputate ut, ultrices vel, augue. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Donec pharetra, magna vestibulum aliquet ultrices, erat tortor sollicitudin mi, sit amet lobortis sapien sapien non mi. Integer ac neque. Duis bibendum. Morbi non quam nec dui luctus rutrum. Nulla tellus.', 'Mystery');
